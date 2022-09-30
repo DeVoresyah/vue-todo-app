@@ -1,7 +1,7 @@
 <template>
   <button
     :data-cy="dataCy"
-    class="py-2.5 px-4 bg-primary-500 rounded-full flex items-center"
+    class="py-2.5 px-4 bg-primary-500 rounded-full flex items-center hover:bg-primary-600 active:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-200"
   >
     <img
       v-if="prefixIcon !== undefined"
