@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .activity-card {
+    @apply min-h-[150px] flex flex-col justify-between;
+  }
+}

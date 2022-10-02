@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+  ],
   theme: {
     extend: {
       colors: {
@@ -24,7 +30,7 @@ module.exports = {
         'gray-900': '#171717',
       },
       fontFamily: {
-        poppins: ['Poppins'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
