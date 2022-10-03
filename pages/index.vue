@@ -1,5 +1,5 @@
 <template>
-  <ActivityList :activities="[]" />
+  <ActivityList :activities="activityList" />
 </template>
 
 <script lang="ts">
