@@ -34,6 +34,7 @@ export default {
     '@nuxtjs/google-fonts',
     '@nuxtjs/svg',
     '@nuxt/postcss8',
+    '@nuxtjs/dotenv',
   ],
 
   // Google Fonts
@@ -57,6 +58,12 @@ export default {
     manifest: {
       lang: 'en',
     },
+  },
+
+  // Env
+  env: {
+    baseUrl: process.env.NX_BASE_API_URL || 'http://localhost:3000',
+    emailApp: process.env.NX_EMAIL || 'de.voresyah@gmail.com',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
