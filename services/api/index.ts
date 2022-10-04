@@ -2,7 +2,12 @@
 import apisauce from 'apisauce'
 
 // Types
-import type { CreateActivityBody, CreateActivityResponse } from './api.types'
+import type {
+  CreateActivityBody,
+  CreateActivityResponse,
+  GetDetailActivityResponse,
+  GetTodosResponse,
+} from './api.types'
 
 // default headers request
 const headers = {
@@ -20,7 +25,10 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
 
   // Activity
   const getActivity = () => api.get(`/activity-groups`)
-  const getDetailActivity = (id: number) => api.get(`/activity-groups/${id}`)
+  const getDetailActivity = (id: number) =>
+    api.get<GetDetailActivityResponse>(`/activity-groups/${id}`)
+  const getTodos = (id: number) =>
+    api.get<GetTodosResponse>(`/todo-items?activity_group_id=${id}`)
   const createActivity = (payload: CreateActivityBody) =>
     api.post<CreateActivityResponse>('/activity-groups', payload)
   const deleteActivity = (id: number) => api.delete(`/activity-groups/${id}`)
@@ -30,6 +38,7 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
     // a list of the API functions from step 2
     getActivity,
     getDetailActivity,
+    getTodos,
     createActivity,
     deleteActivity,
     updateActivity,

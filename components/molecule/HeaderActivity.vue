@@ -27,6 +27,7 @@
 <script>
 import Button from '../atom/Button.vue'
 import TextField from '../atom/TextField.vue'
+import API from '~/services/api'
 
 export default {
   name: 'HeaderActivityComponent',
@@ -51,7 +52,7 @@ export default {
     },
   },
   methods: {
-    handleAddItem() {
+    async handleAddItem() {
       const pathName = this.$route.name
 
       if (pathName === 'activity-slug') {
@@ -60,12 +61,28 @@ export default {
         return
       }
 
-      // TODO: hit add activity api and navigate to todo list with the created activity id
-      // temp created activity id
-      const createdId = 1010
+      const api = API.create('https://todo.api.devcode.gethired.id')
 
-      // navigate to todo list
-      this.$router.push(`/activity/${createdId}`)
+      const initialBodyReq = {
+        email: 'test@gmail.com',
+        title: 'untitled',
+      }
+      const res = await api.createActivity(initialBodyReq)
+
+      if (res.ok) {
+        console.log('success res=> ', res)
+        const createdId = res.data?.id
+        const createdActivityName = res.data?.title
+
+        if (createdId && createdActivityName) {
+          this.newActivityText = createdActivityName
+          // navigate to todo list
+          this.$router.push(`/activity/${createdId}`)
+          return
+        }
+      }
+
+      console.log('failed res => ', res)
     },
   },
 }

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="todoList.length !== 0">
+    <div v-if="todos.length !== 0">
       <ActivityItem
-        v-for="item in todoList"
+        v-for="item in todos"
         :id="item.id"
         :key="item.id"
         :item="item"
@@ -29,20 +29,40 @@
 <script lang="ts">
 import Vue from 'vue'
 import ActivityItem from '~/components/molecule/ActivityItem.vue'
-import { TODOS } from '~/constants/dummy'
+import API from '~/services/api'
 
 export default Vue.extend({
   name: 'ActivityDetail',
   components: { ActivityItem },
-  computed: {
-    todoList() {
-      const slug = this.$route.params?.slug
-      const filterByActivity = TODOS.filter(
-        (item) => item.activity_group_id.toString() === slug
-      )
+  data() {
+    return {
+      todos: [] as any,
+    }
+  },
+  async beforeMount() {
+    const slug = this.$route.params?.slug
 
-      return filterByActivity
-    },
+    if (isNaN(+slug)) {
+      console.log('invalid slug')
+      this.todos = []
+      return
+    }
+
+    try {
+      // hit api to get list of todo by activity id
+      const api = API.create('https://todo.api.devcode.gethired.id')
+      const res = await api.getDetailActivity(Number(slug))
+
+      console.log('todo response => ', res)
+
+      if (res.ok) {
+        this.todos = res.data?.todo_items
+      } else {
+        this.todos = []
+      }
+    } catch (error) {
+      console.log('Error =>', error)
+    }
   },
 })
 </script>

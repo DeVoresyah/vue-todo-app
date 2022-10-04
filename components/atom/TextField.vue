@@ -4,11 +4,11 @@
       <input
         type="text"
         placeholder="New Activity Name"
-        class="w-full focus:outline-none"
+        class="w-full focus:outline-none appearance-none pointer-events-none"
         v-bind:value="textValue"
         v-on:input="$emit('input', $event.target.value)"
       />
-      <button>
+      <button @click="onClick">
         <img src="~/assets/icon-pencil.svg" alt="icon pencil" />
       </button>
     </div>
@@ -22,6 +22,11 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    onClick: {
+      type: Function,
+      required: false,
+      default: () => console.log('Edit Clicked'),
     },
   },
 }
