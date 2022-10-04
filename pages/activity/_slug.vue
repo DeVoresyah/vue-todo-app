@@ -1,5 +1,10 @@
 <template>
   <div>
+    <HeaderTodo
+      class="mb-5"
+      :refetch-todo-list="fetchTodoList"
+      :on-click="openAddTodoModal"
+    />
     <div v-if="todos.length !== 0">
       <ActivityItem
         v-for="item in todos"
@@ -23,46 +28,118 @@
         >Buat List Item kamu</span
       >
     </div>
+    <ModalAddTodo
+      :is-visible="show.addTodoModal"
+      :on-hide="onCloseAddTodoModal"
+      :handle-add-todo="handleSaveTodo"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import ActivityItem from '~/components/molecule/ActivityItem.vue'
 import API from '~/services/api'
+import ActivityItem from '~/components/molecule/ActivityItem.vue'
+import HeaderTodo from '~/components/molecule/HeaderTodo.vue'
+import ModalAddTodo from '~/components/molecule/ModalAddTodo.vue'
 
 export default Vue.extend({
   name: 'ActivityDetail',
-  components: { ActivityItem },
+  components: { ActivityItem, HeaderTodo, ModalAddTodo },
   data() {
     return {
+      activityId: 0,
       todos: [] as any,
+      show: {
+        addTodoModal: false,
+      },
     }
   },
   async beforeMount() {
     const slug = this.$route.params?.slug
 
     if (isNaN(+slug)) {
-      console.log('invalid slug')
+      alert('invalid slug')
       this.todos = []
       return
     }
 
-    try {
-      // hit api to get list of todo by activity id
-      const api = API.create('https://todo.api.devcode.gethired.id')
-      const res = await api.getDetailActivity(Number(slug))
-
-      console.log('todo response => ', res)
-
-      if (res.ok) {
-        this.todos = res.data?.todo_items
-      } else {
-        this.todos = []
+    await this.fetchTodoList(+slug)
+  },
+  methods: {
+    async createTodoItem(title: string, _priority: string) {
+      if (!this.activityId) {
+        return
       }
-    } catch (error) {
-      console.log('Error =>', error)
-    }
+
+      // TODO: hit api to create todo item
+      try {
+        const api = API.create('https://todo.api.devcode.gethired.id')
+
+        const bodyReq = {
+          activity_group_id: this.activityId,
+          title,
+        }
+        const res = await api.createTodo(bodyReq)
+
+        if (res.ok) {
+          console.log('success res=> ', res)
+
+          // TODO: if success refetch todo list
+          this.refetch()
+        }
+      } catch (error) {
+        console.log('Error => ', error)
+      }
+    },
+    async fetchTodoList(activityId: number) {
+      try {
+        // hit api to get list of todo by activity id
+        const api = API.create('https://todo.api.devcode.gethired.id')
+        const res = await api.getDetailActivity(activityId)
+
+        if (res.ok) {
+          this.todos = res.data?.todo_items
+          this.activityId = activityId
+        } else {
+          this.todos = []
+        }
+      } catch (error) {
+        console.log('Error =>', error)
+      }
+    },
+    async refetch() {
+      if (!this.activityId) {
+        return
+      }
+
+      try {
+        // hit api to get list of todo by activity id
+        const api = API.create('https://todo.api.devcode.gethired.id')
+        const res = await api.getDetailActivity(this.activityId)
+
+        if (res.ok) {
+          this.todos = res.data?.todo_items
+        }
+      } catch (error) {
+        console.log('Error =>', error)
+      }
+    },
+    async handleSaveTodo(itemName: string, priorityValue: string) {
+      // prevent to submit
+      if (!itemName || !priorityValue) {
+        alert('Fields Cannot be empty!')
+        return
+      }
+
+      await this.createTodoItem(itemName, priorityValue)
+    },
+    openAddTodoModal() {
+      this.show.addTodoModal = true
+    },
+    onCloseAddTodoModal() {
+      this.show.addTodoModal = false
+    },
   },
 })
 </script>

@@ -2,6 +2,7 @@
   <button
     :data-cy="dataCy"
     class="py-2.5 px-4 bg-primary-500 rounded-full flex items-center hover:bg-primary-600 active:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-200"
+    :disabled="disabled"
     @click="onClick"
   >
     <img
@@ -36,6 +37,11 @@ export default {
     onClick: {
       type: Function,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 }

@@ -5,6 +5,8 @@ import apisauce from 'apisauce'
 import type {
   CreateActivityBody,
   CreateActivityResponse,
+  CreateTodoBody,
+  CreateTodoResponse,
   GetDetailActivityResponse,
   GetTodosResponse,
 } from './api.types'
@@ -31,6 +33,8 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
     api.get<GetTodosResponse>(`/todo-items?activity_group_id=${id}`)
   const createActivity = (payload: CreateActivityBody) =>
     api.post<CreateActivityResponse>('/activity-groups', payload)
+  const createTodo = (payload: CreateTodoBody) =>
+    api.post<CreateTodoResponse>('/todo-items', payload)
   const deleteActivity = (id: number) => api.delete(`/activity-groups/${id}`)
   const updateActivity = (id: number) => api.patch(`/activity-groups/${id}`)
 
@@ -40,6 +44,7 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
     getDetailActivity,
     getTodos,
     createActivity,
+    createTodo,
     deleteActivity,
     updateActivity,
 

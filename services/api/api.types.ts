@@ -19,6 +19,21 @@ export interface CreateActivityResponse {
   email: string
 }
 
+export interface CreateTodoBody {
+  activity_group_id: number
+  title: string
+}
+
+export interface CreateTodoResponse {
+  created_at: string
+  updated_at: string
+  id: number
+  title: string
+  activity_group_id: number
+  is_active: boolean
+  priority: string
+}
+
 export interface GetTodosResponse {
   total: number
   limit: number
