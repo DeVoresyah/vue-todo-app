@@ -2,6 +2,7 @@
   <button
     :data-cy="dataCy"
     class="py-2.5 px-4 bg-primary-500 rounded-full flex items-center hover:bg-primary-600 active:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-200"
+    @click="onClick"
   >
     <img
       v-if="prefixIcon !== undefined"
@@ -31,6 +32,10 @@ export default {
     prefixIcon: {
       type: String,
       default: undefined,
+    },
+    onClick: {
+      type: Function,
+      required: true,
     },
   },
 }

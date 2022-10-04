@@ -168,3 +168,36 @@ export const ACTIVITIES = [
     deleted_at: null,
   },
 ]
+
+export const TODOS = [
+  {
+    id: 1,
+    activity_group_id: 2,
+    title: 'item1',
+    is_active: '1',
+    priority: 'very-high',
+    created_at: '2021-11-30T18:09:19.000Z',
+    updated_at: '2021-11-30T20:23:12.000Z',
+    deleted_at: null,
+  },
+  {
+    id: 2,
+    activity_group_id: 2,
+    title: 'item2',
+    is_active: '0',
+    priority: 'high',
+    created_at: '2021-11-30T20:34:56.000Z',
+    updated_at: '2021-11-30T20:34:57.000Z',
+    deleted_at: null,
+  },
+  {
+    id: 3,
+    activity_group_id: 3,
+    title: 'item3',
+    is_active: '1',
+    priority: 'very-high',
+    created_at: '2021-12-30T20:34:56.000Z',
+    updated_at: '2021-12-30T20:34:57.000Z',
+    deleted_at: null,
+  },
+]

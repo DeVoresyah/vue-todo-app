@@ -9,7 +9,7 @@ const headers = {
   'Content-Type': 'application/json',
 }
 
-const create = (baseURL = process.env.baseUrl) => {
+const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
   const api = apisauce.create({
     // base URL is read from the "constructor"
     baseURL,
@@ -19,13 +19,12 @@ const create = (baseURL = process.env.baseUrl) => {
   })
 
   // Activity
-  const getActivity = () =>
-    api.get(`activity-groups?email=${process.env.emailApp}`)
-  const getDetailActivity = (id: number) => api.get(`activity-groups/${id}`)
+  const getActivity = () => api.get(`/activity-groups`)
+  const getDetailActivity = (id: number) => api.get(`/activity-groups/${id}`)
   const createActivity = (payload: CreateActivityBody) =>
-    api.post<CreateActivityResponse>('activity-groups', payload)
-  const deleteActivity = (id: number) => api.delete(`activity-groups/${id}`)
-  const updateActivity = (id: number) => api.patch(`activity-groups/${id}`)
+    api.post<CreateActivityResponse>('/activity-groups', payload)
+  const deleteActivity = (id: number) => api.delete(`/activity-groups/${id}`)
+  const updateActivity = (id: number) => api.patch(`/activity-groups/${id}`)
 
   return {
     // a list of the API functions from step 2
