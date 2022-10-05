@@ -7,8 +7,8 @@
       v-for="activity in activities"
       :id="activity.id"
       :key="activity.id"
-      title="Daftar Belanja Bulanan"
-      date="2021-11-30T05:29:24.000Z"
+      :title="activity.title"
+      :date="activity.date"
     />
   </div>
   <div
@@ -29,6 +29,7 @@
 
 <script>
 import ActivityCard from '../molecule/ActivityCard.vue'
+
 export default {
   name: 'ActivityListComponent',
   components: {

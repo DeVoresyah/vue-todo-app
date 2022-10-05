@@ -6,6 +6,19 @@ export type TodoType = {
   priority: string
 }
 
+export type ActivityType = {
+  id: number
+  title: string
+  created_at: string
+}
+
+export interface GetActivitiesResponse {
+  total: number
+  limit: number
+  skip: number
+  data: ActivityType[]
+}
+
 export interface CreateActivityBody {
   email: string
   title?: string

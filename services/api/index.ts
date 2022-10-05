@@ -7,6 +7,7 @@ import type {
   CreateActivityResponse,
   CreateTodoBody,
   CreateTodoResponse,
+  GetActivitiesResponse,
   GetDetailActivityResponse,
   GetTodosResponse,
 } from './api.types'
@@ -26,7 +27,7 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
   })
 
   // Activity
-  const getActivity = () => api.get(`/activity-groups`)
+  const getActivity = () => api.get<GetActivitiesResponse>(`/activity-groups`)
   const getDetailActivity = (id: number) =>
     api.get<GetDetailActivityResponse>(`/activity-groups/${id}`)
   const getTodos = (id: number) =>
