@@ -7,6 +7,7 @@ import type {
   CreateActivityResponse,
   CreateTodoBody,
   CreateTodoResponse,
+  DeleteActivityResponse,
   GetActivitiesResponse,
   GetDetailActivityResponse,
   GetTodosResponse,
@@ -36,7 +37,8 @@ const create = (baseURL = process.env.VUE_APP_BASE_URL) => {
     api.post<CreateActivityResponse>('/activity-groups', payload)
   const createTodo = (payload: CreateTodoBody) =>
     api.post<CreateTodoResponse>('/todo-items', payload)
-  const deleteActivity = (id: number) => api.delete(`/activity-groups/${id}`)
+  const deleteActivity = (id: number) =>
+    api.delete<DeleteActivityResponse>(`/activity-groups/${id}`)
   const updateActivity = (id: number) => api.patch(`/activity-groups/${id}`)
 
   return {

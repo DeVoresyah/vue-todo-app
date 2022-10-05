@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderActivity class="mb-5" />
-    <ActivityList :activities="activities" />
+    <ActivityList :activities="activities" :on-click-icon="deleteActivity" />
   </div>
 </template>
 
@@ -38,6 +38,29 @@ export default Vue.extend({
           if (res.data?.data.length) {
             this.activities = res.data?.data
           }
+        }
+      } catch (error) {
+        console.log('Error => ', error)
+      }
+    },
+    async deleteActivity(id: number) {
+      if (!id) return
+
+      const confirmed = confirm(`Detele Activity with ID ${id}`)
+
+      if (!confirmed) return
+
+      try {
+        const api = API.create('https://todo.api.devcode.gethired.id')
+        const res = await api.deleteActivity(id)
+
+        if (res.ok) {
+          if (res.data?.status && res.data?.message) {
+            alert(`${res.data?.status}\n${res.data?.message}`)
+          }
+
+          // refresh activities
+          this.fetchActivities()
         }
       } catch (error) {
         console.log('Error => ', error)

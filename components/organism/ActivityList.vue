@@ -8,7 +8,8 @@
       :id="activity.id"
       :key="activity.id"
       :title="activity.title"
-      :date="activity.date"
+      :date="activity.created_at"
+      :on-click-icon="onClickIcon"
     />
   </div>
   <div
@@ -39,6 +40,11 @@ export default {
     activities: {
       type: Array,
       required: true,
+    },
+    onClickIcon: {
+      type: Function,
+      required: false,
+      default: undefined,
     },
   },
 }

@@ -32,6 +32,11 @@ export interface CreateActivityResponse {
   email: string
 }
 
+export interface DeleteActivityResponse {
+  status?: string
+  message?: string
+}
+
 export interface CreateTodoBody {
   activity_group_id: number
   title: string

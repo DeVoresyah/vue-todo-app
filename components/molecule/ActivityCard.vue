@@ -17,6 +17,7 @@
         <button
           :id="`activity-item-delete-button-${id}`"
           data-cy="activity-item-delete-button"
+          @click.stop.prevent="() => onClickIcon(id)"
         >
           <img src="~/assets/icon-trash.svg" alt="icon trash" />
         </button>
@@ -46,6 +47,11 @@ export default {
     date: {
       type: String,
       required: true,
+    },
+    onClickIcon: {
+      type: Function,
+      required: false,
+      default: () => console.log('Icon Clicked'),
     },
   },
   computed: {
