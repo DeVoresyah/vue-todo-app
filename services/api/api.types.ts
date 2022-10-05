@@ -12,6 +12,19 @@ export type ActivityType = {
   created_at: string
 }
 
+export interface CreateActivityBody {
+  email: string
+  title?: string
+}
+
+export interface CreateActivityResponse {
+  created_at: string
+  updated_at: string
+  id: number
+  title: string
+  email: string
+}
+
 export interface GetActivitiesResponse {
   total: number
   limit: number
@@ -24,19 +37,6 @@ export interface GetDetailActivityResponse {
   title: string
   created_at: string
   todo_items: TodoType[]
-}
-
-export interface CreateActivityBody {
-  email: string
-  title?: string
-}
-
-export interface CreateActivityResponse {
-  created_at: string
-  updated_at: string
-  id: number
-  title: string
-  email: string
 }
 
 export interface DeleteActivityResponse {
@@ -57,6 +57,11 @@ export interface CreateTodoResponse {
   activity_group_id: number
   is_active: boolean
   priority: string
+}
+
+export interface DeleteTodoResponse {
+  status?: string
+  message?: string
 }
 
 export interface GetTodosResponse {

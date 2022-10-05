@@ -12,6 +12,7 @@
         :id="item.id"
         :key="item.id"
         :item="item"
+        :on-click-icon="deleteTodoItem"
       />
     </div>
     <div
@@ -145,6 +146,28 @@ export default Vue.extend({
       }
 
       await this.createTodoItem(itemName, priorityValue)
+    },
+    async deleteTodoItem(todoId: number) {
+      if (!todoId) return
+
+      const confirmed = confirm(`Detele Todo with ID ${todoId}`)
+      if (!confirmed) return
+
+      try {
+        const api = API.create('https://todo.api.devcode.gethired.id')
+        const res = await api.deleteTodo(todoId)
+
+        if (res.ok) {
+          if (res.data?.status && res.data?.message) {
+            alert(`${res.data?.status}\n${res.data?.message}`)
+          }
+
+          // refresh todos
+          this.refetch()
+        }
+      } catch (error) {
+        console.log('Error => ', error)
+      }
     },
     openAddTodoModal() {
       this.show.addTodoModal = true

@@ -5,7 +5,7 @@
       <div :class="['rounded-full w-[5px] h-[5px]', priorityStyle]" />
       <p>{{ item?.title || 'unknown' }}</p>
     </div>
-    <button>
+    <button @click.stop.prevent="() => onClickIcon(item.id)">
       <img :src="require(`~/assets/icon-trash.svg`)" alt="icon" />
     </button>
   </div>
@@ -18,6 +18,11 @@ export default {
     item: {
       type: Object,
       default: () => ({}),
+    },
+    onClickIcon: {
+      type: Function,
+      required: false,
+      default: () => console.log('Icon Clicked'),
     },
   },
   computed: {
