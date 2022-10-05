@@ -19,6 +19,13 @@ export interface GetActivitiesResponse {
   data: ActivityType[]
 }
 
+export interface GetDetailActivityResponse {
+  id: number
+  title: string
+  created_at: string
+  todo_items: TodoType[]
+}
+
 export interface CreateActivityBody {
   email: string
   title?: string
@@ -57,11 +64,4 @@ export interface GetTodosResponse {
   limit: number
   skip: number
   data: TodoType[]
-}
-
-export interface GetDetailActivityResponse {
-  id: number
-  title: string
-  created_at: string
-  todo_items: []
 }

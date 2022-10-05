@@ -4,6 +4,7 @@
       class="mb-5"
       :refetch-todo-list="fetchTodoList"
       :on-click="openAddTodoModal"
+      :activity-name="activityName"
     />
     <div v-if="todos.length !== 0">
       <ActivityItem
@@ -39,9 +40,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import API from '~/services/api'
+
+// Components
 import ActivityItem from '~/components/molecule/ActivityItem.vue'
 import HeaderTodo from '~/components/molecule/HeaderTodo.vue'
 import ModalAddTodo from '~/components/molecule/ModalAddTodo.vue'
+
+// Types
+import { TodoType } from '~/services/api/api.types'
 
 export default Vue.extend({
   name: 'ActivityDetail',
@@ -49,7 +55,8 @@ export default Vue.extend({
   data() {
     return {
       activityId: 0,
-      todos: [] as any,
+      activityName: '',
+      todos: [] as TodoType[],
       show: {
         addTodoModal: false,
       },
@@ -99,7 +106,10 @@ export default Vue.extend({
         const res = await api.getDetailActivity(activityId)
 
         if (res.ok) {
-          this.todos = res.data?.todo_items
+          if (res.data?.todo_items.length) {
+            this.todos = res.data?.todo_items
+          }
+          this.activityName = res.data?.title || ''
           this.activityId = activityId
         } else {
           this.todos = []
@@ -119,7 +129,9 @@ export default Vue.extend({
         const res = await api.getDetailActivity(this.activityId)
 
         if (res.ok) {
-          this.todos = res.data?.todo_items
+          if (res.data?.todo_items.length) {
+            this.todos = res.data?.todo_items
+          }
         }
       } catch (error) {
         console.log('Error =>', error)

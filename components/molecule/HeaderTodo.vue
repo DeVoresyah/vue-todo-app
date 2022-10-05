@@ -1,6 +1,6 @@
 <template>
   <section>
-    <TextField v-model="newActivityText" :text-value="newActivityText" />
+    <TextField v-model="activityTitleText" :text-value="activityTitleText" />
     <div class="w-full p-5 container mx-auto flex items-center justify-end">
       <Button
         title="Tambah"
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// Components
 import Button from '../atom/Button.vue'
 import TextField from '../atom/TextField.vue'
 
@@ -33,11 +34,21 @@ export default {
       required: false,
       default: () => ({}),
     },
+    activityName: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   data() {
     return {
-      newActivityText: 'New Activity',
+      activityTitleText: '',
     }
+  },
+  watch: {
+    activityName(val) {
+      this.activityTitleText = val
+    },
   },
 }
 </script>
